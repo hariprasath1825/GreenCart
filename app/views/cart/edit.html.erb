@@ -1,0 +1,18 @@
+<%=form_for @cartitem , url:{action: :update} do |f| %>
+
+  <h1>Edit cart item</h1>
+<br><br>
+
+  <div class="field">
+    <%= f.label :quantity %>
+    <%= f.text_field :quantity, placeholder: @cartitem.quantity,  value:@cartitem.quantity %>
+  </div>
+<br>
+  <div class="action">
+    <%=link_to 'Back',cart_index_path , class:"btn btn-secondary" %>
+
+    <%=f.submit 'Update', class:"btn btn-secondary" %>
+
+  </div>
+
+<%end %>

@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <h1>Cart List</h1>
+  <table class="table table-striped table-hover ">
+    <tr>
+      <th>Cart Id</th>
+      <th>Product Name</th>
+      <th>Quantity(kg)</th>
+      <!--      <th>Seller id</th>-->
+      <th>Total Price</th>
+      <th>Edit</th>
+      <th>Remove</th>
+<!--      <th></th>-->
+    </tr>
+    <%@cartitems.each do |cartitem| %>
+      <tr>
+        <td><%=cartitem.cart_id %></td>
+        <td><%=cartitem.product&.name %></td>
+        <td><%=cartitem.quantity %></td>
+        <!--        <td><%#=product.seller_id %></td>-->
+        <td><%=cartitem.price %></td>
+        <td><%=link_to 'Edit' , edit_cart_path(cartitem.id) %></td>
+        <td><%=link_to 'Delete', cart_path(cartitem.id), data: {turbo_confirm:'Are You Sure ? Do you want to remove this product from cart ', turbo_method: :delete} %></td>
+<!--        <td><%#= link_to 'Buy' , new_cart_order_path(cartitem.id, price: cartitem.price), method: :post %></td>-->
+      </tr>
+    <% end %>
+  </table>
+</div>
+<br>
+<%=link_to 'Back', product_index_path , class:"btn btn-secondary"%>

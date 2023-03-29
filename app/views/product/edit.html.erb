@@ -1,0 +1,42 @@
+<%= form_for @product ,url:{action: :update} do |f|%>
+  <h1> Edit product</h1>
+<div class="container-fluid">
+
+  <div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name, placeholder: @product.name,  value:@product.name %>
+  </div>
+  <br>
+  <div class="field">
+  <%= f.label :price %>
+  <%= f.text_field :price ,placeholder: @product.price,  value:@product.price %>
+  </div>
+  <br>
+  <div class="field">
+  <%= f.label :available_quantity %>
+  <%= f.text_field :available_quantity ,placeholder: @product.available_quantity,  value:@product.available_quantity%>
+  </div>
+  <br>
+  <div class="field">
+  <%= f.label :description %>
+  <%= f.text_field :description,placeholder: @product.description,  value:@product.description %>
+  </div>
+<br>
+  <div class="field">
+  <%= f.label :category %>
+  <%= f.text_field :category ,placeholder: @product.category,  value:@product.category%>
+  </div>
+<br>
+  <div class="actions">
+    <%=link_to 'Back',{controller: 'product',action: 'index'} , class:"btn btn-secondary" %>
+  </div>
+  <br>
+    <%=f.submit 'Update product details' , class:"btn btn-secondary" %>
+<br>
+<% end  %>
+<br>
+  <%if current_user.role=="seller" %>
+    <p><%=link_to 'Delete product', product_path(@product), data: {turbo_confirm:'Are You Sure ? Do you want to delete this product ', turbo_method: :delete} ,class:"btn btn-secondary"%></p>
+  <%end %>
+
+</div>
