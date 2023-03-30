@@ -1,15 +1,10 @@
-<!--<h6>Customer Show</h6>-->
+ <p>Name  : <%=@customer.name %></p>
+ <p>Mobile no  : <%=@customer.mbl_no %></p>
+ <p>Age  : <%=@customer.age %></p>
 
+<%#if Address.find_by(id: @customer.id).nil? %>
 
-<!--<h3>Product details</h3>-->
-<!--<div class="fluid">-->
+<!--   <p>Add an address !</p>-->
+   <%#form_for :address , url:  %>
 
-<!--<p>Product Name  :        <%#=@product.name %><br></p>-->
-<!--<p>Product Price :        <%#=@product.price %><br></p>-->
-<!--<p>Product Description :  <%#=@product.description %><br></p>-->
-<!--<p>Available Quantity  :  <%#=@product.available_quantity %><br></p>-->
-<!--<p><%#=link_to 'Back' , customer_index_path , class:"btn btn-secondary"%></p>-->
-<!--<p><%#=link_to 'Add to Cart' , customer_index_path , class:"btn btn-secondary"%></p>-->
-
-
-<!--</div>-->
+ <%#end %>

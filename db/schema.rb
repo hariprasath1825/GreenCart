@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_28_070524) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_30_092053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "door_no"
+    t.string "street"
+    t.string "district"
+    t.string "state"
+    t.integer "pincode"
+    t.integer "addressable_id"
+    t.string "addressable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cartitems", force: :cascade do |t|
     t.integer "cart_id"
@@ -33,9 +45,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_070524) do
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "mbl_no"
-    t.text "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age"
   end
 
   create_table "orderitems", force: :cascade do |t|
@@ -48,9 +60,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_070524) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "total_price"
+    t.decimal "total_price"
     t.integer "customer_id"
-    t.boolean "payment_status"
+    t.string "payment_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "order_date"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "order_id"
+    t.decimal "paid_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -71,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_070524) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "mbl_no"
+    t.integer "age"
   end
 
   create_table "users", force: :cascade do |t|
@@ -82,6 +103,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_070524) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role"
+    t.string "accountable_type"
+    t.bigint "accountable_id"
+    t.index ["accountable_type", "accountable_id"], name: "index_users_on_accountable"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

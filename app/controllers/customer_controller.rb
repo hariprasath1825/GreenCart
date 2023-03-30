@@ -1,8 +1,11 @@
 class CustomerController < ApplicationController
 
   def index
-    @products=Product.all.order(:id)
+
   end
 
+  def show
+    @customer = Customer.find(params[:id])
+  end
 
 end

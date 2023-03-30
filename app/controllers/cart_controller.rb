@@ -1,18 +1,22 @@
 class CartController < ApplicationController
 
   def index
-    @cartitems = Cartitem.all
+    @cartitems = Cartitem.where(cart_id: current_user.accountable.cart.id)
+    p @cartitems
   end
 
-  def new(product_id: :product_id)
+  def new
     @cartitem = Cartitem.new
-    @cartitem.product_id=product_id
     end
 
   def create
     @cartitem=Cartitem.new(cartitem_params)
+
     @cartitem.price=params[:cartitem][:price].to_i*params[:cartitem][:quantity].to_i
-    # p @caritems
+
+    @cartitem.cart_id = current_user.accountable.cart.id
+
+    p @cartitem
     if @cartitem.save
       flash[:notice] = 'Product added to cart successfully !'
       redirect_to   product_index_path
@@ -51,7 +55,7 @@ class CartController < ApplicationController
 
   private
   def cartitem_params
-    params.require(:cartitem).permit(:cart_id, :product_id , :quantity)
+    params.require(:cartitem).permit( :product_id , :quantity)
   end
 
   def cartitem_update_params

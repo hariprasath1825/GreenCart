@@ -1,22 +1,22 @@
-<%= form_for  @order ,url:{action: :create} do |f|%>
-  <h1> Add product</h1>
+<%#= form_for  @order ,url:{action: :create} do |f|%>
+<!--  <h1> Add product</h1>-->
 
-  <div class="field">
-    <%= f.label :price %>
-    <%= f.text_field :price , value: @order.price %>
-  </div>
-  <br>
+<!--  <div class="field">-->
+    <%#= f.label :price %>
+    <%#= f.text_field :price , value: @order.price %>
+<!--  </div>-->
+<!--  <br>-->
 
-  <div class="field">
-    <%= f.text_field :payment_status , value: true %>
-  </div>
+<!--  <div class="field">-->
+    <%#= f.text_field :payment_status , value: true %>
+<!--  </div>-->
 
-  <div class="actions">
+<!--  <div class="actions">-->
     <%#=link_to 'Back',{controller: 'product',action: 'index'} %>
-    <%=f.submit class:"btn btn-secondary" %>
-  </div>
-  <br>
+    <%#=f.submit class:"btn btn-secondary" %>
+<!--  </div>-->
+<!--  <br>-->
 
-<% end  %>
+<%# end  %>
 
 <%#= link_to 'Back', product_index_path ,class:"btn btn-secondary" %>

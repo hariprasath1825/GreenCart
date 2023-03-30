@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  has_one :seller
+  belongs_to :seller
   has_many :cartitems
   has_many :orderitems
   # has_many :orders , through: :orderitems

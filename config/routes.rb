@@ -14,14 +14,14 @@ Rails.application.routes.draw do
   #   root 'devise/sessions#new'
   # end
 
-  get 'seller/index'
   get 'home/index'
-  get 'product/index'
-  get 'product/showcust'
+
 
   resources :product do
     resources :cart, only: :new
   end
+
+  resources :seller
 
   resources :customer
   resources :cart do

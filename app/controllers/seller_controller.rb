@@ -4,4 +4,8 @@ class SellerController < ApplicationController
 
   end
 
+  def show
+
+  end
+
 end

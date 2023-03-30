@@ -1,6 +1,10 @@
 class ProductController < ApplicationController
   def index
-    @products=Product.all.order(:id)
+    if current_user.role=="seller"
+    @products=Product.where(seller_id: current_user.accountable.id)
+    else
+      @products=Product.all
+    end
   end
 
   def show
@@ -9,6 +13,18 @@ class ProductController < ApplicationController
 
   def new
     @product=Product.new
+  end
+  def create
+    @product=Product.new(product_params)
+    @product.seller_id = current_user.accountable.id
+    if @product.save
+      flash[:notice] = 'Product saved successfully !'
+
+      redirect_to product_index_path
+    else
+      flash[:notice] = 'Failed to save new product !'
+      redirect_to new_product_path
+    end
   end
 
   def edit
@@ -28,18 +44,6 @@ class ProductController < ApplicationController
     end
   end
 
-  def create
-    @product=Product.new(product_params)
-
-    if @product.save
-      flash[:notice] = 'Product saved successfully !'
-
-      redirect_to product_index_path
-    else
-      flash[:notice] = 'Failed to save new product !'
-      redirect_to new_product
-    end
-  end
 
 
   def destroy

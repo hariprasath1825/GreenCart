@@ -29,10 +29,58 @@
     <%= f.select :role ,[['customer','customer'],['seller','seller']] %>
   </div>
 <br>
+
+<!--details-->
+    <%= fields_for :details do |d| %>
+
+      <%=d.label :user_name %><br>
+      <%=d.text_field :name  %>
+      <br>
+
+
+      <%=d.label :mbl_no %><br>
+      <%=d.text_field :mbl_no %>
+<br>
+
+      <%=d.label :age %><br>
+      <%=d.number_field :age %>
+<br>
+      <%end %>
+<!--    <br>-->
+
+<!-- address-->
+    <%= fields_for :address do |a| %>
+
+      <%=a.label :door_no %><br>
+      <%=a.text_field :door_no  %>
+      <br>
+
+
+      <%=a.label :street_name %><br>
+      <%=a.text_field :street %>
+      <br>
+
+      <%=a.label :distrct_name %><br>
+      <%=a.text_field :district %>
+      <br>
+
+      <%=a.label :state_name %><br>
+      <%=a.text_field :state %>
+      <br>
+
+      <%=a.label :pincode %><br>
+      <%=a.number_field :pincode %>
+      <br>
+    <%end %>
+    <br>
+
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
 <br>
+
+
 <%= render "devise/shared/links" %>
   </div>

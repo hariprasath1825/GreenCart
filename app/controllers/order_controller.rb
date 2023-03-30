@@ -1,26 +1,37 @@
 class OrderController < ApplicationController
 
+    skip_before_action :verify_authenticity_token
   def  index
-    @order=Order.all
+    @orderitems=Orderitem.where(order_id: params[:id])
+    p @orderitems
   end
 
   def new
-    @order = Order.new(order_params)
+    @order = Order.new
   end
   def create
-    @order = Order.new(price: params[:price])
-    @order.payment_status = true
-    # @order.save
-    #
-    # current_user.cart.cart_items.each do |item|
-    #   @order.orderitems.create(product_id: item.product_id, quantity: item.quantity, price: item.price)
-    # end
+    price = 0
+    @cartitems = Cartitem.where(cart_id: params[:cart_id])
+    @cartitems.each do |cartitem|
+      price += cartitem.price
+    end
+    p price
+    @order = Order.new(total_price: price, payment_status: 'false', order_date: Time.now.strftime("%d/%m/%Y"), customer_id: params[:customer_id])
 
     p @order
     if @order.save
-      redirected_to cart_index_path
+      flash[:notice]= "Product ordered successfully !"
+
+      @cartitems.each do |cartitem|
+        orderitem = Orderitem.new(price: cartitem.price, quantity: cartitem.price ,product_id: cartitem.product.id,order_id: @order.id)
+        orderitem.save
+      end
+
+      # @cartitems.destroy_all
+      redirect_to cart_order_index_path(id: @order.id)
     else
-      redirected_to new_product_order_path
+      flash[:notice]= "Product order failed  !"
+      redirect_to new_product_order_path
     end
   end
 

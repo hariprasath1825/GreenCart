@@ -3,14 +3,14 @@
 <br>
 <%=form_for @cartitem ,url:{controller: :cart , action: :create} do |f|%>
 
-  <div class="field form-group">
-    <%=f.label :cart_id %>
-    <%=f.number_field :cart_id %>
-  </div>
+<!--  <div class="field form-group">-->
+    <%#=f.label :cart_id %>
+    <%#=f.number_field :cart_id %>
+<!--  </div>-->
 
   <div class="field form-group">
     <%#=f.label :'product id' %>
-    <%=f.number_field :product_id, value: params[:product_id],type: :hidden %>
+    <%= f.number_field :product_id, value: params[:product_id], type: :hidden%>
   </div>
 
 <br>

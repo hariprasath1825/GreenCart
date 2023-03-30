@@ -4,21 +4,21 @@
   <h1>Order List</h1>
   <table class="table table-striped table-hover ">
     <tr>
-      <th>Total price</th>
-      <th>Customer id</th>
-      <th>Payment status</th>
+      <th>Product name</th>
+      <th>Quantity</th>
+      <th>Price</th>
 
     </tr>
-    <%@order.each do |product| %>
+    <%@orderitems.each do |orderitem| %>
       <tr>
-        <td><%=product.total_price %></td>
-        <td><%=product.customer_id %></td>
-        <td><%=product.payment_status %></td>
+        <td><%=orderitem.product.name %></td>
+        <td><%=orderitem.quantity %></td>
+        <td><%=orderitem.price %></td>
       </tr>
     <% end %>
   </table>
 </div>
 <br>
 
-<%#=link_to 'Add new product', new_product_path , class:"btn btn-secondary"%>
-<%#=link_to 'Cart List', cart_index_path , class:"btn btn-secondary"%>
+<%#=link_to 'Proceed to payment', new_product_path , class:"btn btn-secondary"%>
+<%#=link_to 'Back to cart', cart_index_path , class:"btn btn-secondary"%>

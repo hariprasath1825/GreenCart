@@ -14,5 +14,7 @@
     <%#end %>
 
   <%if current_user.role=="customer" %>
-  <p><%=link_to 'Add to Cart' , new_product_cart_path(@product.id,price: @product.price) , class:"btn btn-secondary"%></p>
+  <p><%=link_to 'Add to Cart' , new_product_cart_path(product_id:  @product.id,price: @product.price),class:"btn btn-secondary"%></p>
   <%end %>
+
+

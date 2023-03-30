@@ -1,4 +1,10 @@
 <div class="container-fluid">
+
+  <%if @cartitems.empty? %>
+
+    <h1>You haven't added any product to cart !</h1>
+
+    <%else %>
   <h1>Cart List</h1>
   <table class="table table-striped table-hover ">
     <tr>
@@ -25,5 +31,10 @@
     <% end %>
   </table>
 </div>
+  <%end %>
+
 <br>
 <%=link_to 'Back', product_index_path , class:"btn btn-secondary"%>
+<%unless @cartitems.empty? %>
+<%=link_to 'Place Order' , cart_order_index_path(cart_id: current_user.accountable.cart.id, customer_id: current_user.accountable.id),  data: { turbo_confirm: "confirm proceed to  purchase ", turbo_method: :create} ,class:"btn btn-secondary" %>
+<%end %>
