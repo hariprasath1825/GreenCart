@@ -1,5 +1,3 @@
-
-
 <div class="container-fluid">
   <h1>Order List</h1>
   <table class="table table-striped table-hover ">
@@ -20,5 +18,5 @@
 </div>
 <br>
 
-<%#=link_to 'Proceed to payment', new_product_path , class:"btn btn-secondary"%>
-<%#=link_to 'Back to cart', cart_index_path , class:"btn btn-secondary"%>
+<%=link_to 'Proceed to payment', cart_order_payment_index_path(order_id: params[:id]) , class:"btn btn-secondary"%>
+<%=link_to 'Back to cart', cart_index_path , class:"btn btn-secondary"%>

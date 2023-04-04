@@ -3,10 +3,9 @@
 <br>
 <%=form_for @cartitem ,url:{controller: :cart , action: :create} do |f|%>
 
-<!--  <div class="field form-group">-->
-    <%#=f.label :cart_id %>
-    <%#=f.number_field :cart_id %>
-<!--  </div>-->
+  <% if @cartitem.errors.any? %>
+    <%=render "home/error" , model: @cartitem %>
+  <% end %>
 
   <div class="field form-group">
     <%#=f.label :'product id' %>
@@ -16,7 +15,7 @@
 <br>
   <div class="field form-group">
     <%=f.label :quantity %>
-    <%=f.number_field :quantity %>
+    <%=f.number_field :quantity ,value: 1 %>
   </div>
 
 <br>

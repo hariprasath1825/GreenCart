@@ -1,0 +1,29 @@
+<h3>Order details</h3>
+<br><br>
+<div class="container-fluid">
+  <table class="table table-striped table-hover ">
+    <tr>
+      <th>Product name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Add review</th>
+    </tr>
+    <%@orderitems.each do |orderitem| %>
+      <tr>
+        <td><%=orderitem.product.name %></td>
+        <td><%=orderitem.quantity %></td>
+        <td><%=orderitem.price %></td>
+        <td><%=link_to 'Add review' , new_cart_order_review_path(product_id: orderitem.product_id,order_id: orderitem.order_id)   %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<br>
+
+
+<%=link_to 'Back', order_order_history_path, class:"btn btn-secondary"%>
+
+<%#=link_to 'Proceed to payment', cart_order_payment_index_path(order_id: params[:id]) , class:"btn btn-secondary"%>
+
+
+

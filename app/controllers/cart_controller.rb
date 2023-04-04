@@ -10,6 +10,8 @@ class CartController < ApplicationController
     end
 
   def create
+
+
     @cartitem=Cartitem.new(cartitem_params)
 
     @cartitem.price=params[:cartitem][:price].to_i*params[:cartitem][:quantity].to_i
@@ -22,8 +24,8 @@ class CartController < ApplicationController
       redirect_to   product_index_path
     else
       flash[:notice]='Failed to add product to cart !'
-      redirect_to new_cart_path
-      # render :new, status: :unprocessable_entity
+      # redirect_to new_cart_path
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +43,7 @@ class CartController < ApplicationController
       redirect_to cart_index_path
     else
       flash[:notice]="Failed to update product !"
-      redirect_to cart_index_path
+      render :edit , status: :unprocessable_entity
     end
   end
 

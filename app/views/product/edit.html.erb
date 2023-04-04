@@ -1,3 +1,9 @@
+
+<% if @product.errors.any? %>
+  <%=render "home/error" , model: @product %>
+<% end %>
+
+
 <%= form_for @product ,url:{action: :update} do |f|%>
   <h1> Edit product</h1>
 <div class="container-fluid">
@@ -27,6 +33,13 @@
   <%= f.text_field :category ,placeholder: @product.category,  value:@product.category%>
   </div>
 <br>
+
+  <div class="field">
+  <%= f.label :image %>
+  <%= f.file_field :image %>
+  </div>
+<br>
+
   <div class="actions">
     <%=link_to 'Back',{controller: 'product',action: 'index'} , class:"btn btn-secondary" %>
   </div>

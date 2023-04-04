@@ -1,0 +1,5 @@
+
+<br>
+
+<h4>Your Bill is <strong><%=@order.total_price %></strong> Rupees</h4>
+<%=link_to 'Confirm purchase', cart_order_payment_index_path(order_id:@order.id, total_price: @order.total_price) ,data: {turbo_confirm: "Confirm purchase" , turbo_method: "post" }, class:"btn btn-secondary" %>

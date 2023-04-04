@@ -9,6 +9,7 @@ class ProductController < ApplicationController
 
   def show
     @product=Product.find(params[:id])
+    @reviews = Review.where(product_id: params[:id])
   end
 
   def new
@@ -23,7 +24,7 @@ class ProductController < ApplicationController
       redirect_to product_index_path
     else
       flash[:notice] = 'Failed to save new product !'
-      redirect_to new_product_path
+      render :new , status: :unprocessable_entity
     end
   end
 
@@ -56,7 +57,7 @@ class ProductController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:name,:price,:description,:seller_id,:available_quantity,:category)
+    params.require(:product).permit(:name,:price,:description,:seller_id,:available_quantity,:category,:image)
   end
 
 end

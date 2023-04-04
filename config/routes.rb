@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  get 'payment/index'
+  get 'payment/new'
+  get 'payment/create'
 
-
-  # devise_for :users
 
   devise_for :users , controllers:{
     sessions: 'users/sessions',
@@ -24,13 +27,15 @@ Rails.application.routes.draw do
   resources :seller
 
   resources :customer
+  get 'order/order_history'
   resources :cart do
-    resources :order
+    resources :order do
+      resources :review
+      resources :payment
+    end
   end
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
 end

@@ -1,3 +1,8 @@
+<% if @cartitem.errors.any? %>
+  <%=render "home/error" , model: @cartitem %>
+<% end %>
+
+
 <%=form_for @cartitem , url:{action: :update} do |f| %>
 
   <h1>Edit cart item</h1>

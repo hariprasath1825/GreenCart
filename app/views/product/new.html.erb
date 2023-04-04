@@ -1,5 +1,12 @@
-<%= form_for  @product ,url:{action: :create} do |f|%>
+
+
   <h1> Add product</h1>
+<%= form_for  @product ,url:{action: :create} do |f|%>
+
+<% if @product.errors.any? %>
+      <%=render "home/error" , model: @product %>
+<% end %>
+
 
   <div class="field">
     <%= f.label :name %>
@@ -32,6 +39,12 @@
   <div class="field">
     <%= f.label :category %>
     <%= f.text_field :category %>
+  </div>
+  <br>
+
+    <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
   </div>
   <br>
 

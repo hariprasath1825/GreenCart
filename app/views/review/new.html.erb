@@ -1,0 +1,36 @@
+
+
+<h1>Product details</h1>
+<div class="fluid">
+
+  <p>Product Name  :    <%=@product.name %> <br></p>
+  <p>Product Price :    <%=@product.price %>  Rupees <br></p>
+  <p>Product Description :  <%=@product.description %><br></p>
+  <p>Available Quantity  :  <%=@product.available_quantity %> Kg<br></p>
+</div>
+
+
+<% if @review.errors.any? %>
+  <%=render "home/error" , model: @review %>
+<% end %>
+
+
+<%=form_for @review , url:{controller: :review , method: :create} do |f|%>
+
+  <%=f.label :rating %>
+  <%=f.number_field :rating , min: 0 , max: 5%>
+  <br><br>
+
+  <%#=f.label :comment %>
+  <%=f.text_area :comment , placeholder: "add a comment here" %>
+
+  <%=f.number_field :product_id , value: @product.id , type: :hidden%>
+<br><br>
+  <%=f.submit 'Post Comment' , class:"btn btn-secondary" %>
+
+<%end %>
+<br>
+
+<p><%=link_to 'Back' , cart_order_path( id: current_user.accountable.cart.id ) , class:"btn btn-secondary"%></p>
+
+
