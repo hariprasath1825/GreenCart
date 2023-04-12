@@ -31,6 +31,8 @@ gem "jbuilder"
 
 gem 'activeadmin', '~> 2.13', '>= 2.13.1'
 
+gem 'fomantic-ui-sass'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -74,3 +76,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "doorkeeper", "~> 5.6"

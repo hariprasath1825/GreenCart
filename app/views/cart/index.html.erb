@@ -10,7 +10,7 @@
     <thead class=" table-dark">
 
     <tr>
-      <th>Cart Id</th>
+<!--      <th>Cart Id</th>-->
       <th>Product Name</th>
       <th>Quantity(kg)</th>
       <!--      <th>Seller id</th>-->
@@ -22,7 +22,7 @@
     </thead>
     <%@cartitems.each do |cartitem| %>
       <tr>
-        <td><%=cartitem.cart_id %></td>
+<!--        <td><%#=cartitem.cart_id %></td>-->
         <td><%=cartitem.product&.name %></td>
         <td><%=cartitem.quantity %></td>
         <!--        <td><%#=product.seller_id %></td>-->
@@ -41,7 +41,7 @@
 
 
 <br>
-<%=link_to 'Back', product_index_path , class:"btn btn-secondary"%>
+<%=link_to 'Back', product_index_path , class:"ui inverted blue button"%>
 <%unless @cartitems.empty? %>
 <%=link_to 'Place Order' , cart_order_index_path(customer_id: current_user.accountable.id ,cart_id:current_user.accountable.cart.id  ),  data: { turbo_confirm: "confirm proceed to  purchase ", turbo_method: :create} ,class:"btn btn-secondary" %>
 <%end %>

@@ -6,14 +6,16 @@ ActiveAdmin.register Product do
 
   index do
     selectable_column
-    column :name
+    column :name do |product|
+      link_to product.name , admin_product_path(id: product.id)
+    end
     column :price
     column :available_quantity
+    column :seller.name
     column :description
     column :category
     column :created_at
     column :updated_at
-    column :seller.name
   end
 
 

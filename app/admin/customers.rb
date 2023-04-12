@@ -9,6 +9,7 @@ ActiveAdmin.register Customer do
     column :mbl_no
     column :age
     column :created_at
+    column :updated_at
   end
 
   filter :name
@@ -17,7 +18,6 @@ ActiveAdmin.register Customer do
   filter :order
   filter :cart
   filter :addresses
-
 
   scope :all
   scope :made_purchases

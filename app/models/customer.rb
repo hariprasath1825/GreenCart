@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
 
+
   has_one :cart , dependent: :destroy
   has_many :orders , dependent: :destroy
   has_one :user , as: :accountable , dependent: :destroy

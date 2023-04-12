@@ -1,8 +1,5 @@
 class ReviewController < ApplicationController
 
-  def index
-  end
-
   def new
     @product = Product.find_by(id: params[:product_id])
     @review = Review.new
@@ -13,7 +10,8 @@ class ReviewController < ApplicationController
     @review.date = Date.today
     p @review
     if @review.save
-      redirect_to cart_order_review_index_path
+      flash[:notice] = "Review added successfully !"
+      redirect_to cart_order_path(id: params[:review][:id])
   else
     flash[:notice]="Failed to post comment !"
     render :new , status: :unprocessable_entity
@@ -21,8 +19,5 @@ class ReviewController < ApplicationController
 
   end
 
-
-  def show
-  end
 
 end

@@ -4,9 +4,11 @@ class OrderController < ApplicationController
 
   def  index
     @orderitems= Orderitem.where(order_id: params[:id])
-     p @orders
   end
 
+    def show
+      @orderitems= Orderitem.where(order_id: params[:id])
+    end
 
   def new
     @order = Order.new
@@ -19,13 +21,10 @@ class OrderController < ApplicationController
     @cartitems.each do |cartitem|
       price += cartitem.price
     end
-    # p price
+
     @order = Order.new(total_price: price, payment_status: 'false', order_date: Time.now.strftime("%d/%m/%Y"), customer_id: params[:customer_id])
 
-    # p @order
     if @order.save
-      # flash[:notice]= "Product ordered successfully !"
-
       @cartitems.each do |cartitem|
         orderitem = Orderitem.new(price: cartitem.price, quantity: cartitem.quantity ,product_id: cartitem.product.id,order_id: @order.id)
         orderitem.save
@@ -34,17 +33,9 @@ class OrderController < ApplicationController
       # @cartitems.destroy_all
       redirect_to cart_order_index_path(id: @order.id)
     else
-      # flash[:notice]= "Product order failed  !"
       redirect_to new_product_order_path
     end
   end
-
-
-
-    def show
-      @orderitems= Orderitem.where(order_id: params[:id])
-    end
-
 
 
     def order_history
@@ -52,6 +43,7 @@ class OrderController < ApplicationController
     end
 
 
+private
   def order_params
     params.require(:order).permit(:price)
   end

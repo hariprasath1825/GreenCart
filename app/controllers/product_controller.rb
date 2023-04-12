@@ -3,7 +3,7 @@ class ProductController < ApplicationController
     if current_user.role=="seller"
     @products=Product.where(seller_id: current_user.accountable.id)
     else
-      @products=Product.all
+      @products=Product.where.not(available_quantity: 0).order(:id)
     end
   end
 
