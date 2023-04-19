@@ -18,9 +18,9 @@ class User < ApplicationRecord
   end
 
   def customer?
+    # puts role
     false
     true if role=="customer"
   end
-
 
 end

@@ -1,4 +1,8 @@
 class ProductController < ApplicationController
+
+  before_action :check_user
+  before_action :check_seller_user , except: %i[index show]
+
   def index
     if current_user.role=="seller"
     @products=Product.where(seller_id: current_user.accountable.id)
@@ -8,7 +12,7 @@ class ProductController < ApplicationController
   end
 
   def show
-    @product=Product.find(params[:id])
+    @product=Product.find_by(id: params[:id])
     @reviews = Review.where(product_id: params[:id])
   end
 
@@ -33,7 +37,7 @@ class ProductController < ApplicationController
   end
 
   def update
-    @product=Product.find(params[:id])
+    @product=Product.find_by(id: params[:id])
     if @product.update(product_params)
       flash[:notice]='Successfully updated the product !'
 
@@ -58,6 +62,20 @@ class ProductController < ApplicationController
   private
   def product_params
     params.require(:product).permit(:name,:price,:description,:seller_id,:available_quantity,:category,:image)
+  end
+
+  def check_user
+    unless user_signed_in?
+      flash[:notice] = "Unauthorized action ! Please log in to continue ."
+      redirect_to new_user_session_path
+    end
+  end
+
+  def check_seller_user
+    unless user_signed_in? and current_user.seller?
+      flash[:notice] = "Unauthorized action ! Please log in to continue ."
+      redirect_to new_user_session_path
+    end
   end
 
 end

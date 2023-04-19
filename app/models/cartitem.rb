@@ -4,7 +4,9 @@ class Cartitem < ApplicationRecord
   belongs_to :product
 
   validates :quantity, :price , :product_id , :cart_id , presence: true
-  validates :quantity , comparison: {greater_than: 0 }
+  validates :quantity  , numericality: true
+  validates :price , comparison: {greater_than: 0 }
+  validates :price  , numericality: true , comparison: {greater_than: 0 }
 
   #callbacks
   before_validation :set_price
@@ -13,13 +15,13 @@ class Cartitem < ApplicationRecord
 
 
 
-  private
+  # private
   def set_price
     self.price=product.price * quantity
   end
 
   def set_updated_price
-    price = product.price * quantity
+    self.price = product.price * quantity
   end
 
 end

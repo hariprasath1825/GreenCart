@@ -10,8 +10,8 @@ class Customer < ApplicationRecord
 
   validates  :name , :mbl_no , :age , presence: true
   validates :mbl_no , length: {is: 10} , numericality: { only_integer: true }
-  validates :age , comparison: {greater_than: 17 , lesser_than: 100}
-  validates :name , format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
+  validates :age , comparison: {greater_than: 17 , less_than: 100}
+  validates :name , format: { with: /\A[a-z A-Z]+\z/, message: "only allows alphabets" }
 
 
   scope :made_purchases , -> { joins(:orders).group('customers.id').having('count(customer_id) > 0') }

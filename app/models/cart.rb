@@ -3,7 +3,9 @@ class Cart < ApplicationRecord
   has_many :cartitems , dependent: :destroy
   has_many :products, through: :cartitems
 
-  validates :total_price , :customer_id, presence: true , numericality: true
+  validates :total_price ,  presence: true
+  validates :total_price , numericality: true
+  validates :total_price , comparison: {greater_than: -1}
 
 
 

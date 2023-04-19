@@ -83,7 +83,7 @@ Doorkeeper.configure do
 
   # If you are planning to use Doorkeeper in Rails 5 API-only application, then you might
   # want to use API mode that will skip all the views management and change the way how
-  # Doorkeeper responds to a requests.
+  # Doorkeeper responds to a controllers.
   #
   # api_only
 

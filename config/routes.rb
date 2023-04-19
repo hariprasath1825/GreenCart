@@ -49,21 +49,21 @@ Rails.application.routes.draw do
     get 'home/index'
 
     # custom api
-    get 'product/all_products'
-    get 'order/order_history'
+    get 'products/all_products'
+    get 'orders/order_history'
 
 
-    resources :product do
-      resources :cart, only: :new
+    resources :products do
+      resources :carts, only: :new
     end
 
-    resources :seller
+    resources :sellers
 
-    resources :customer
-    resources :cart do
-      resources :order do
-        resources :review
-        resources :payment
+    resources :customers
+    resources :carts do
+      resources :orders do
+        resources :reviews
+        resources :payments
       end
     end
 
