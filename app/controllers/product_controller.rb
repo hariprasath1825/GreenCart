@@ -5,15 +5,35 @@ class ProductController < ApplicationController
 
   def index
     if current_user.role=="seller"
-    @products=Product.where(seller_id: current_user.accountable.id)
+      @products=Product.where(seller_id: current_user.accountable.id).order(:id)
     else
-      @products=Product.where.not(available_quantity: 0).order(:id)
+      @products=Product.all.order(:id)
     end
   end
 
   def show
     @product=Product.find_by(id: params[:id])
-    @reviews = Review.where(product_id: params[:id])
+    if @product.nil?
+      flash[:notice] = "Unauthorised action !"
+      redirect_to product_index_path
+    else
+      @reviews = Review.where(product_id: params[:id]).page params[:page]
+      all_reviews = Review.where(product_id: params[:id])
+      @avg_rating = 0
+      unless all_reviews.empty?
+        all_reviews.each do |r|
+          @avg_rating += r.rating.to_i
+
+        end
+        @avg_rating = @avg_rating/all_reviews.count
+      end
+      if current_user.seller?
+        if @product.seller_id != current_user.accountable.id
+          flash[:notice] = "Unauthorised action !"
+          redirect_to product_index_path
+        end
+      end
+    end
   end
 
   def new
@@ -33,29 +53,41 @@ class ProductController < ApplicationController
   end
 
   def edit
-    @product=Product.find(params[:id])
+    @product = Product.find_by(id: params[:id])
+    unless !@product.nil? and @product.seller == current_user.accountable
+      flash[:notice] = "Unauthorized action !"
+      redirect_to product_index_path
+    end
   end
 
   def update
     @product=Product.find_by(id: params[:id])
-    if @product.update(product_params)
-      flash[:notice]='Successfully updated the product !'
-
-      redirect_to product_index_path
+    if @product.seller_id == current_user.accountable.id
+      if @product.update(product_params)
+        flash[:notice]='Successfully updated the product !'
+        redirect_to product_index_path
+      else
+        flash[:notice]='Failed to update product !'
+        render :edit, status: :unprocessable_entity
+        # redirect_to edit_product_path(id: @product.id)
+      end
     else
-      flash[:notice]='Failed to update product !'
-      # redirect_to edit_product_path
-      render :edit, status: :unprocessable_entity
+      flash[:notice] = "Unauthorized action !"
+      redirect_to product_index_path
     end
   end
 
 
-
   def destroy
-    @product = Product.find(params[:id])
-    @product.destroy
-    flash[:notice]= 'Product deleted successfully !'
-    redirect_to product_index_path
+    @product = Product.find_by(id: params[:id])
+    if @product.seller_id == current_user.accountable.id
+      @product.destroy
+      flash[:notice]= 'Product deleted successfully !'
+      redirect_to product_index_path
+    else
+      flash[:notice] = "Unauthorized action !"
+      redirect_to product_index_path
+    end
   end
 
 

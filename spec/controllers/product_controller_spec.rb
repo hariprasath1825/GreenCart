@@ -16,7 +16,7 @@ RSpec.describe ProductController  do
         get :index
         expect(response).to redirect_to(new_user_session_path)
       end
-      end
+    end
 
     context "when user signed in as customer" do
       it "shows lists of products" do
@@ -24,7 +24,7 @@ RSpec.describe ProductController  do
         get :index
         expect(response).to render_template :index
       end
-      end
+    end
 
     context "when user signed in as seller" do
       it "shows lists of products" do
@@ -33,7 +33,7 @@ RSpec.describe ProductController  do
         expect(response).to render_template :index
       end
     end
-    end
+  end
 
   describe "get/product #show " do
     context "when user not signed in" do
@@ -41,7 +41,7 @@ RSpec.describe ProductController  do
         get :show, params:{id: product.id}
         expect(response).to redirect_to(new_user_session_path)
       end
-      end
+    end
 
     context "when user signed in as customer" do
       it "shows product details" do
@@ -49,7 +49,7 @@ RSpec.describe ProductController  do
         get :show, params:{id: product.id}
         expect(response).to render_template :show
       end
-      end
+    end
 
     context "when user signed in as seller" do
       it "shows product details" do
@@ -66,7 +66,7 @@ RSpec.describe ProductController  do
         get :new
         expect(response).to redirect_to(new_user_session_path)
       end
-      end
+    end
 
     context "when user signed_in as customer" do
       it "redirects to login page" do
@@ -88,47 +88,44 @@ RSpec.describe ProductController  do
   describe "post/product #create" do
     context "creating a product" do
 
-    context "when user not signed_in" do
-      it "redirects to login page" do
-        get :create
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-
-    context "when user signed_in as customer" do
-      it "redirects to login page" do
-        sign_in customer_user
-        get :create
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-
-    context "when user signed_in as seller with valid params" do
-      it "creates new product" do
-        # product_params = attributes_for(:product)
-        sign_in seller_user
-        get :create  , params:{product:{name: "apple", price: 100 , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
-        expect(flash[:notice]).to eq("Product saved successfully !")
-      end
-    end
-
-    context "when user signed_in as seller with invalid params" do
-      it "renders new page" do
-        # product_params = attributes_for(:product)
-        sign_in seller_user
-        get :create  , params:{product:{name: "apple", price: nil , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
-        expect(response).to render_template :new
-      end
+      context "when user not signed_in" do
+        it "redirects to login page" do
+          get :create
+          expect(response).to redirect_to(new_user_session_path)
+        end
       end
 
-    context "when user signed_in as seller with invalid params" do
-      it "fails to create new product" do
-        # product_params = attributes_for(:product)
-        sign_in seller_user
-        get :create  , params:{product:{name: "apple", price: nil , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
-        expect(flash[:notice]).to eq("Failed to save new product !")
+      context "when user signed_in as customer" do
+        it "redirects to login page" do
+          sign_in customer_user
+          get :create
+          expect(response).to redirect_to(new_user_session_path)
+        end
       end
-    end
+
+      context "when user signed_in as seller with valid params" do
+        it "creates new product" do
+          sign_in seller_user
+          get :create  , params:{product:{name: "apple", price: 100 , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
+          expect(flash[:notice]).to eq("Product saved successfully !")
+        end
+      end
+
+      context "when user signed_in as seller with invalid params" do
+        it "renders new page" do
+          sign_in seller_user
+          get :create  , params:{product:{name: "apple", price: nil , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
+          expect(response).to render_template :new
+        end
+      end
+
+      context "when user signed_in as seller with invalid params" do
+        it "fails to create new product" do
+          sign_in seller_user
+          get :create  , params:{product:{name: "apple", price: nil , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
+          expect(flash[:notice]).to eq("Failed to save new product !")
+        end
+      end
     end
   end
 
@@ -139,7 +136,7 @@ RSpec.describe ProductController  do
           get :edit , params:{id: product.id}
           expect(response).to redirect_to(new_user_session_path)
         end
-        end
+      end
 
       context "when user signed_in as customer" do
         it "redirects to login page" do
@@ -147,7 +144,7 @@ RSpec.describe ProductController  do
           sign_in customer_user
           expect(response).to redirect_to(new_user_session_path)
         end
-        end
+      end
 
       context "when user signed_in as seller" do
         it "renders edit page" do
@@ -187,7 +184,6 @@ RSpec.describe ProductController  do
 
       context "when user signed_in as seller with invalid params" do
         it "renders edit page" do
-          # product_params = attributes_for(:product)
           sign_in seller_user
           get :update  , params:{id: product.id, product:{name: "apple", price: nil , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
           expect(response).to render_template :edit
@@ -196,7 +192,6 @@ RSpec.describe ProductController  do
 
       context "when user signed_in as seller with invalid params" do
         it "fails to update product" do
-          # product_params = attributes_for(:product)
           sign_in seller_user
           get :update  , params:{id: product.id , product:{name: "apple", price: nil , description: "Fresh and tasty" , available_quantity: 20 , category: "fruits"}}
           expect(flash[:notice]).to eq("Failed to update product !")
@@ -213,7 +208,7 @@ RSpec.describe ProductController  do
           get :destroy , params:{id: product.id}
           expect(response).to redirect_to(new_user_session_path)
         end
-        end
+      end
 
       context "when user signed_in as customer" do
         it "redirects to login page" do
@@ -221,7 +216,7 @@ RSpec.describe ProductController  do
           get :destroy , params:{id: product.id}
           expect(response).to redirect_to(new_user_session_path)
         end
-        end
+      end
 
       context "when user signed_in as seller" do
         it "redirects to products index" do
@@ -229,7 +224,7 @@ RSpec.describe ProductController  do
           get :destroy , params:{id: product.id}
           expect(response).to redirect_to(product_index_path)
         end
-        end
+      end
 
       context "when user signed_in as seller" do
         it "deletes the product" do

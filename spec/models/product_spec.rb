@@ -151,6 +151,20 @@ RSpec.describe Product, type: :model do
       it "throws error" do
         expect(product.errors).to include(:available_quantity)
       end
+      end
+
+    context "when value is numeric" do
+      let!(:product) {build(:product , available_quantity: 100)}
+      it "it doesn't throw any error" do
+        expect(product.errors).to_not include(:available_quantity)
+      end
+      end
+
+    context "when value is non numeric" do
+      let(:product) {build(:product , available_quantity: "hundred")}
+      it "it doecn't throw any error" do
+        expect(product.save).to be_falsy
+      end
     end
   end
 

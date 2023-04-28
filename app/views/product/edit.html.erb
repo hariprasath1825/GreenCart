@@ -1,55 +1,44 @@
-
-<% if @product.errors.any? %>
-  <%=render "home/error" , model: @product %>
-<% end %>
-
-
-<%= form_for @product ,url:{action: :update} do |f|%>
-  <h1> Edit product</h1>
-<div class="container-fluid">
-
-  <div class="field">
-  <%= f.label :name %>
-  <%= f.text_field :name, placeholder: @product.name,  value:@product.name %>
-  </div>
+<div class="wrapper">
+  <h1>Edit product</h1>
   <br>
-  <div class="field">
-  <%= f.label :price %>
-  <%= f.text_field :price ,placeholder: @product.price,  value:@product.price %>
-  </div>
-  <br>
-  <div class="field">
-  <%= f.label :available_quantity %>
-  <%= f.text_field :available_quantity ,placeholder: @product.available_quantity,  value:@product.available_quantity%>
-  </div>
-  <br>
-  <div class="field">
-  <%= f.label :description %>
-  <%= f.text_field :description,placeholder: @product.description,  value:@product.description %>
-  </div>
-<br>
-  <div class="field">
-  <%= f.label :category %>
-  <%= f.text_field :category ,placeholder: @product.category,  value:@product.category%>
-  </div>
-<br>
 
-  <div class="field">
-  <%= f.label :image %>
-  <%= f.file_field :image %>
-  </div>
-<br>
+  <%= form_for @product ,url:{action: :update} do |f|%>
+    <div class="container-fluid">
 
-  <div class="actions">
-    <%=link_to 'Back',{controller: 'product',action: 'index'} , class:"btn btn-secondary" %>
-  </div>
+      <div class="field">
+
+        <%= f.text_field :name, placeholder: "Name",  value:@product.name %>
+        <br><br>
+
+        <%= f.text_field :price ,placeholder: "Price" , value:@product.price %>
+        <br><br>
+
+        <%= f.text_field :available_quantity ,placeholder:"Available Quantity",  value:@product.available_quantity%>
+        <br><br>
+
+        <%= f.text_field :description,placeholder: "Description" ,  value:@product.description %>
+        <br><br>
+
+        <%= f.text_field :category ,placeholder: "Category" ,  value:@product.category%>
+        <br><br>
+
+        <%= f.file_field :image %>
+        <br><br>
+
+        <div>
+
+          <%=f.submit 'Update' , data:{turbo_method: :update}, class:"large ui green button" , style:"width: 120px"%>
+        </div>
+
+  <% end  %>
   <br>
-    <%=f.submit 'Update product details' , class:"btn btn-secondary" %>
-<br>
-<% end  %>
-<br>
-  <%if current_user.role=="seller" %>
-    <p><%=link_to 'Delete product', product_path(@product), data: {turbo_confirm:'Are You Sure ? Do you want to delete this product ', turbo_method: :delete} ,class:"btn btn-secondary"%></p>
-  <%end %>
+  <br>
+  <div>
+    <%=link_to 'Back',product_path(id: @product.id)  , class:"large ui grey button" , style:"margin-right: 50px ; width: 150px"%>
+  <%=link_to 'Delete product', product_path(@product), data: {turbo_confirm:'Are You Sure ? Do you want to delete this product ', turbo_method: :delete} ,class:"large ui red button", style:"width: 150px"%>
 
+  </div>
+
+  </div>
+  </div>
 </div>

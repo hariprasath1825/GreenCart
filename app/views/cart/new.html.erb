@@ -1,37 +1,29 @@
 <h2>Add product to cart</h2>
-<br>
-<br>
-<%=form_for @cartitem ,url:{controller: :cart , action: :create} do |f|%>
+<div class="wrapper" style="margin-top: 200px; height: 300px ; width: 500px; ">
 
-  <% if @cartitem.errors.any? %>
-    <%=render "home/error" , model: @cartitem %>
-  <% end %>
+  <%=form_for @cartitem ,url:{controller: :cart , action: :create} do |f|%>
 
-  <div class="field form-group">
-    <%#=f.label :'product id' %>
+    <p style="font-size: 1.8em; font-style: oblique">Add <%=@product.name.humanize %> to cart !</p>
+
     <%= f.number_field :product_id, value: params[:product_id], type: :hidden%>
+
+    <br>
+    <div class="field form-group">
+      <div style="text-align: left; margin-left: 30px; font-size: 1.5em ">
+        <%=f.label "Enter Quantity :" %>
+      </div>
+      <br>
+      <%product=Product.find_by(id: params[:product_id] )%>
+      <%=f.number_field :quantity ,value: 1, max:product.available_quantity  %>
+    </div>
+
+    <br>
+
+    <div>
+      <%=link_to 'Back',product_path(id: @product.id) , class:"large ui grey button" , style:"margin-right: 50px ; width: 100px"%>
+      <%=f.submit 'Add to cart',  data:{turbo_method: :create}, class:"large ui green button", style:"width: 150px" %>
+  <%end %>
   </div>
 
-<br>
-  <div class="field form-group">
-    <%=f.label :quantity %>
-    <%product=Product.find_by(id: params[:product_id] )%>
-    <%=f.number_field :quantity ,value: 1, max:product.available_quantity  %>
-  </div>
 
-<br>
-  <div class="field form-group">
-    <%#=f.label :price %>
-    <%=f.number_field :price , value: params[:price]  , type: :hidden%>
-  </div>
-
-<br>
-
-  <div class="field form-group">
-    <%= f.submit 'Add to cart', class:"btn btn-secondary" %>
-  </div>
-
-  <br>
-<%=link_to 'Back' , product_index_path , class:"btn btn-secondary"%>
-
-<%end %>
+</div>

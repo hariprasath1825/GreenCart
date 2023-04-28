@@ -5,7 +5,7 @@ class Cartitem < ApplicationRecord
 
   validates :quantity, :price , :product_id , :cart_id , presence: true
   validates :quantity  , numericality: true
-  validates :price , comparison: {greater_than: 0 }
+  validates :quantity , comparison: {greater_than: 0 }
   validates :price  , numericality: true , comparison: {greater_than: 0 }
 
   #callbacks

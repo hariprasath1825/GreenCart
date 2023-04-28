@@ -1,11 +1,30 @@
-<% if model.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(model.errors.count, "error") %> prohibited this article from being saved:</h2>
 
-    <ul>
-      <% model.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-      <% end %>
+<%#if model.errors.any? %>
+<!--<div class="ui red message">-->
+<!--  <i class="close icon"></i>-->
+<!--  <div class="header">-->
+<!--    There were some errors with your submission-->
+<!--  </div>-->
+    <%# model.errors.each do |error| %>
+<!--  <ul class="list">-->
+<!--      <li><%#= error.full_message %></li>-->
+<!--  </ul>-->
+    <%# end %>
+<!--</div>-->
+<%#end %>
+
+
+<%if model.errors.any? %>
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-left: 400px; margin-right: 400px">
+    <div class="header" style="font-style: italic ; font-size: 1.5em">
+      There were some errors with your submission
+    </div>
+      <br>
+  <%model.errors.each do |error| %>
+    <ul class="list">
+      <li><%=error.full_message %></li>
     </ul>
-  </div>
-<% end %>
+    <%end %>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<%end %>

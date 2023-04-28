@@ -1,86 +1,97 @@
-<h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="wrapper">
 
-  <div class="container-fluid">
+  <h1>Sign up !</h1>
+  <br>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <div class="container-fluid">
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-<br>
-  <div class="field">
-    <%= f.label :role %><br />
-    <%= f.select :role ,[['customer','customer'],['seller','seller']] %>
-  </div>
-<br>
-
-<!--details-->
-    <%= fields_for :details do |d| %>
-
-      <%=d.label :user_name %><br>
-      <%=d.text_field :name  %>
+      <div class="field">
+        <!--        <%#= f.label :email %><br />-->
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
+      </div>
       <br>
 
+      <div class="field">
+        <%#= f.label :password %>
+        <%# if @minimum_password_length %>
+        <!--          <em>(<%#= @minimum_password_length %> characters minimum)</em>-->
+        <!--        <%# end %><br />-->
+        <%= f.password_field :password,autofocus: true,  autocomplete: "new-password"  , placeholder: "Password"%>
+      </div>
+      <br>
 
-      <%=d.label :mbl_no %><br>
-      <%=d.text_field :mbl_no %>
+      <div class="field">
+        <!--        <%#= f.label :password_confirmation %><br />-->
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" , placeholder: "Re-Enter Password"%>
+      </div>
+      <br>
+
+      <div class="field">
+        <%= f.select :role ,[['customer','customer'],['seller','seller']] %>
+      </div>
 <br>
 
-      <%=d.label :age %><br>
-      <%=d.number_field :age %>
-<br>
+
+      <!--details-->
+      <%= fields_for :details do |d| %>
+
+        <%=d.text_field :name  ,placeholder: "Name" %>
+        <br>
+
+
+        <%=d.text_field :mbl_no ,placeholder: "Mobile number" %>
+        <br>
+
+        <%=d.number_field :age ,placeholder: "Age" %>
+        <br>
       <%end %>
-<!--    <br>-->
+      <!--    <br>-->
 
-<!-- address-->
-    <%= fields_for :address do |a| %>
+      <!-- address-->
+      <%= fields_for :address do |a| %>
 
-      <%=a.label :door_no %><br>
-      <%=a.text_field :door_no  %>
+        <%=a.text_field :door_no ,placeholder: "Door no"  %>
+        <br>
+
+
+        <%=a.text_field :street ,placeholder: "Street " %>
+        <br>
+
+        <%=a.text_field :district ,placeholder: "District" %>
+        <br>
+
+        <%=a.text_field :state ,placeholder: "State" %>
+        <br>
+
+        <%=a.number_field :pincode ,placeholder: "Pincode" %>
+        <br>
+      <%end %>
       <br>
 
+      <center>
+        <div class="action" style="width: 200px">
+          <%= f.submit "Sign up" , class:"ui blue submit button" %>
+        </div>
+      </center>
+  <% end %>
+  <br>
 
-      <%=a.label :street_name %><br>
-      <%=a.text_field :street %>
-      <br>
+  <div class="member center" >
 
-      <%=a.label :distrct_name %><br>
-      <%=a.text_field :district %>
-      <br>
+    Already have an account ! &nbsp <p> </p> <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;"> <%=link_to "Login here" , new_user_session_path %> <i class="sign in icon" style="visibility: visible;"></i></a>
 
-      <%=a.label :state_name %><br>
-      <%=a.text_field :state %>
-      <br>
-
-      <%=a.label :pincode %><br>
-      <%=a.number_field :pincode %>
-      <br>
-    <%end %>
-    <br>
-
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
   </div>
-<% end %>
-<br>
 
-
-<%= render "devise/shared/links" %>
+  <%#= render "devise/shared/links" %>
   </div>
+
+</div>
+
+<br><br><br>
+
+
+<!-- <i class="sign in alternate icon" style="visibility: visible;"></i> -->

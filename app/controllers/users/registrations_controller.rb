@@ -19,7 +19,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     cart=Cart.new
     cart.customer_id=accountable.id
+    cart.total_price = 0
     cart.save
+    puts cart.inspect
+    puts accountable.inspect
 
     build_resource(sign_up_params)
     resource.accountable_id = accountable.id

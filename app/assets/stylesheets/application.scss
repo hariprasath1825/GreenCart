@@ -24,3 +24,174 @@ $font-family: $font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif !defaul
 
 
 @import "semantic-ui" ;
+
+.out_of_stock {
+  color: red;
+  font-family: Garuda;
+  font-size: 15px;
+  font-weight: bolder;
+  //text-decoration: line-through;
+}
+
+.available {
+  color: green;
+  font-family: Garuda;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.limited {
+  color: saddlebrown;
+  font-family: Garuda;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.product-index-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 20px;
+  column-gap: 20px;
+  //padding: 10px;
+  //flex-wrap: wrap;
+  //justify-content: space-around;
+  border-color: #730E15;
+  border-width: thick;
+}
+
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+
+body{
+  background: rgba(225, 255, 234, 0.8);
+}
+
+.wrapper{
+  width: 430px;
+  padding: 2rem 1rem;
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 1px 20px 35px rgba(0, 0 ,0, 0.2);
+}
+
+h1{
+  font-size: 2rem;
+  color: #07001f;
+  margin-bottom: 1.2rem;
+}
+
+form input{
+  width: 80%;
+  outline: none;
+  border: 1px solid #fff;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  background: #e4e4e4;
+}
+
+form input:hover{
+  background:rgba(244, 245, 251, 0.8);
+  transition-delay: 150ms;
+  transition-timing-function: step-start;
+}
+
+
+//.actions{
+//  width: 92%;
+//  outline: none;
+//  border: 1px solid #fff;
+//  padding: 12px 20px;
+//  margin-bottom: 10px;
+//  border-radius: 20px;
+//  background: #e4e4e4;
+//}
+.hover2{
+  background:rgba(97, 126, 233, 0.8);
+  transition-delay: 200ms;
+  transition-timing-function: step-start;
+}
+
+//button{
+//  font-size: 1rem;
+//  margin-top: 1.8rem;
+//  padding: 10px 0;
+//  border-radius: 20px ;
+//  outline: none;
+//  border: none;
+//  width: 98%;
+//  cursor: pointer;
+//  background: rgb(17 ,17, 143);
+//}
+//cart
+
+input:focus{
+  border: 1px solid rgb(192,192,192);
+}
+.terms input{
+  height: 1em;
+  width: 1em;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.terms label{
+  font-size: 0.7rem;
+}
+
+.terms a{
+  color: rgb(17,107,143);
+  text-decoration: none;
+}
+
+.member{
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  color: #636363
+}
+
+.member a{
+  color: rgb(17, 107 ,143);
+  text-decoration: none;
+}
+
+
+li{
+  position: relative;
+  display: block;
+  transition: .5s;
+}
+li::after{
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 3px;
+  top: 100%;
+  left: 0;
+  transition: transform .5s;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+li:hover{
+  color: white;
+}
+
+li:after{
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+.style_image{
+  object-fit: cover;
+}

@@ -28,7 +28,7 @@ class Api::ReviewsController < Api::ApiController
       render json: {error: "No such order id exists ! "} , status: 404
       end
     else
-      render json: {error: "Unauthorized to write review ! "} , status: 401
+      render json: {error: "Unauthorized action ! "} , status: 401
     end
   end
 

@@ -3,21 +3,55 @@
 <% end %>
 
 
-<%=form_for @cartitem , url:{action: :update} do |f| %>
+<%#=form_for @cartitem , url:{action: :update} do |f| %>
 
-  <h1>Edit cart item</h1>
-<br><br>
+<!--  <h1>Edit cart item</h1>-->
+<!--<br><br>-->
 
-  <div class="field">
-    <%= f.label :quantity %>
-    <%= f.number_field :quantity, placeholder: @cartitem.quantity,  value:@cartitem.quantity %>
+<!--  <div class="field">-->
+    <%#= f.label :quantity %>
+    <%#= f.number_field :quantity, placeholder: @cartitem.quantity,  value:@cartitem.quantity %>
+<!--  </div>-->
+<!--<br>-->
+<!--  <div class="action">-->
+    <%#=link_to 'Back',cart_index_path , class:"btn btn-secondary" %>
+
+    <%#=f.submit 'Update', class:"btn btn-secondary" %>
+
+<!--  </div>-->
+
+<%#end %>
+
+
+
+
+
+
+
+<h2>Edit cartitem</h2>
+<div class="wrapper" style="margin-top: 200px; height: 300px ; width: 500px; ">
+
+  <%=form_for @cartitem ,url:{controller: :cart , action: :update} do |f|%>
+
+    <p style="font-size: 1.8em; font-style: oblique">Edit cart item <%=@cartitem.product.name.humanize %> !</p>
+
+
+    <br>
+    <div class="field form-group">
+      <div style="text-align: left; margin-left: 30px; font-size: 1.5em ">
+        <%=f.label "Enter Quantity :" %>
+      </div>
+      <br>
+      <%=f.number_field :quantity ,value: @cartitem.quantity, max:@cartitem.product.available_quantity  %>
+    </div>
+
+    <br>
+
+    <div>
+      <%=link_to 'Back',cart_index_path , class:"large ui grey button" , style:"margin-right: 50px ; width: 100px"%>
+      <%=f.submit 'Update',  data:{turbo_method: :update}, class:"large ui green button", style:"width: 150px" %>
+  <%end %>
   </div>
-<br>
-  <div class="action">
-    <%=link_to 'Back',cart_index_path , class:"btn btn-secondary" %>
 
-    <%=f.submit 'Update', class:"btn btn-secondary" %>
 
-  </div>
-
-<%end %>
+</div>

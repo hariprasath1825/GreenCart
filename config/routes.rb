@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
   get 'home/index'
+  get 'home/log_out'
 
 
   resources :product do
@@ -18,12 +19,13 @@ Rails.application.routes.draw do
   end
 
   resources :seller
+  resources :review , only: %i[destroy]
 
   resources :customer
   get 'order/order_history'
   resources :cart do
     resources :order do
-      resources :review
+      resources :review , only: %i[new create]
       resources :payment
 
     end
@@ -51,7 +53,6 @@ Rails.application.routes.draw do
     # custom api
     get 'products/all_products'
     get 'orders/order_history'
-
 
     resources :products do
       resources :carts, only: :new

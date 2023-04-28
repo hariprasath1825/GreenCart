@@ -48,27 +48,42 @@ RSpec.describe Cart, type: :model do
         expect(cart.errors).to include(:total_price)
       end
     end
-
   end
 
-  context "has_many" do
+  describe "cart association" do
 
-    [:cartitems , :products].each do |each|
-      it each.to_s.humanize do
-        association = Cart.reflect_on_association(each).macro
-        expect(association).to be(:has_many)
+    context "has_many" do
+
+      [:cartitems , :products].each do |each|
+        it each.to_s.humanize do
+          association = Cart.reflect_on_association(each).macro
+          expect(association).to be(:has_many)
+        end
+      end
+    end
+
+
+    context "belongs_to"  do
+      let(:customer) {create(:customer)}
+      let(:cart) {build(:cart , customer: customer)}
+      it "customer is true" do
+        expect(cart.customer).to be_an_instance_of(Customer)
+      end
+    end
+
+    context "destroy dependency" do
+      context "when cart is destroyed" do
+        let(:customer) {create(:customer)}
+        let(:cart) {build(:cart , customer: customer)}
+        let(:product) {create(:product)}
+        let(:cartitem) {create(:cartitem , product: product , cart: cart)}
+        it "cartitems are also deleted" do
+          cart.delete
+          cartitems = Cartitem.find_by(cart_id: cart.id)
+          expect(cartitems).to be_nil
+        end
       end
     end
   end
-
-
-  # context "belongs_to" do
-  #
-  #   it "customer" do
-  #     cart = build(:cart)
-  #     expect(cart.customer).to be_an_instance_of(Customer)
-  #   end
-  #
-  # end
 
 end

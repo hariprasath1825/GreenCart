@@ -7,6 +7,6 @@ class Order < ApplicationRecord
 
 
   validates :total_price ,:customer_id , :order_date , presence: true
-  validates :total_price , numericality: true
+  validates :total_price , numericality: true , comparison: {greater_than: 0}
 
 end

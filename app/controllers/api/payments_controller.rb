@@ -1,4 +1,4 @@
-class Api::PaymentController < Api::ApiController
+class Api::PaymentsController < Api::ApiController
 
   before_action :check_user
 
@@ -27,7 +27,7 @@ class Api::PaymentController < Api::ApiController
         render json: {error: "No such order id exists ! "} , status: 404
       end
     else
-      render json: {error: "Unmatched cart id !"} , status: 422
+      render json: {error: "Unauthorised action !"} , status: 401
     end
   end
 

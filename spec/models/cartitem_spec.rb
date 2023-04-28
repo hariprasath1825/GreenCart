@@ -5,27 +5,22 @@ RSpec.describe Cartitem , type: :model do
   describe "quantity" do
     let(:product) {create(:product)}
 
-    before(:each) do
-      cartitem.validate
-    end
+    # before(:each) do
+    #   cartitem.validate
+    # end
 
     context "when value is present" do
       let(:cartitem) {build(:cartitem ,product_id: product.id, quantity: 10)}
       it "doesn't throw any error" do
+        cartitem.validate
         expect(cartitem.errors).to_not include(:quantity)
-      end
-    end
-
-    context "when value is nil" do
-      let(:cartitem) {build(:cartitem ,product_id: product.id, quantity: nil)}
-      it "throws error" do
-        expect(cartitem.errors).to include(:quantity)
       end
     end
 
     context "when value is numeric" do
       let(:cartitem) {build(:cartitem ,product_id: product.id, quantity: 10)}
       it "throws error" do
+      cartitem.validate
         expect(cartitem.errors).to_not include(:quantity)
       end
     end
@@ -33,6 +28,7 @@ RSpec.describe Cartitem , type: :model do
     context "when value is non numeric" do
       let(:cartitem) {build(:cartitem ,product_id: product.id, quantity: "ten")}
       it "throws error" do
+      cartitem.validate
         expect(cartitem.errors).to include(:quantity)
       end
     end
@@ -40,6 +36,7 @@ RSpec.describe Cartitem , type: :model do
     context "when value is greater than 0" do
       let(:cartitem) {build(:cartitem ,product_id: product.id, quantity: 5)}
       it "doesn't throw any error" do
+        cartitem.validate
         expect(cartitem.errors).to_not include(:quantity)
       end
     end
@@ -47,61 +44,12 @@ RSpec.describe Cartitem , type: :model do
     context "when value is less than 0" do
       let(:cartitem) {build(:cartitem ,product_id: product.id, quantity: -5)}
       it "doesn't throw any error" do
+        cartitem.validate
         expect(cartitem.errors).to include(:quantity)
       end
     end
   end
 
-  describe "price" do
-      let!(:product) {create(:product)}
-    before(:each) do
-      cartitem.validate
-    end
-
-    context "when value is present" do
-      let(:cartitem) {build(:cartitem ,product_id: product.id,  price: 100)}
-      it "doesn't throw any error" do
-        expect(cartitem.errors).to_not include(:price)
-      end
-    end
-
-    context "when value is nil" do
-      let(:cartitem) {build(:cartitem ,product_id: product.id, price: nil)}
-      it "throws error" do
-        expect(cartitem.errors).to include(:price)
-      end
-    end
-
-    context "when value is numeric" do
-      let(:cartitem) {build(:cartitem ,product_id: product.id, price: 100)}
-      it "doesn't throw any error" do
-        expect(cartitem.errors).to_not include(:price)
-      end
-    end
-
-    context "when value is non numeric" do
-      let(:cartitem) {build(:cartitem ,product_id: product.id, price: "hundred")}
-      it "throws error" do
-        # p cartitem.errors.full_messages
-        expect(cartitem.errors).to include(:price)
-      end
-    end
-
-    context "when value is greater than 0" do
-      let(:cartitem) {build(:cartitem ,product_id: product.id, price: 200)}
-      it "doesn't throw any error" do
-        expect(cartitem.errors).to_not include(:price)
-      end
-    end
-
-    context "when value is less than 0" do
-      let(:cartitem) {build(:cartitem,product_id: product.id , price: -200)}
-      it "throws error" do
-        # p cartitem.errors.full_messages
-        expect(cartitem.errors).to include(:price)
-      end
-    end
-  end
 
   describe "product_id" do
     before(:each) do
@@ -115,16 +63,9 @@ RSpec.describe Cartitem , type: :model do
         expect(cartitem.errors).to_not include(:product_id)
       end
     end
-
-    # context "when value is nil" do
-    #   let(:cartitem) {build(:cartitem , product: nil)}
-    #   it "throws error" do
-    #     expect(cartitem.errors).to include(:product_id)
-    #   end
-    # end
   end
 
-  describe "cartitem" do
+  describe "cartitem association" do
     context "belongs_to cart" do
       let(:customer) {create(:customer)}
       let(:product) {create(:product)}

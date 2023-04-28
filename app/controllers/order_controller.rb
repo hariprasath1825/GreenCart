@@ -3,11 +3,23 @@ class OrderController < ApplicationController
   before_action :check_customer_user
 
   def  index
-    @orderitems= Orderitem.where(order_id: params[:id])
+    order = Order.find_by(id: params[:id])
+    if order.nil? or order.customer_id !=current_user.accountable.id or current_user.accountable.cart.id != params[:cart_id].to_i
+      flash[:notice] = "Unauthorized action !"
+      redirect_to root_path
+    else
+      @orderitems= Orderitem.where(order_id: params[:id])
+    end
   end
 
   def show
-    @orderitems= Orderitem.where(order_id: params[:id])
+    order = Order.find_by(id: params[:id])
+    if order.nil? or order.customer_id !=current_user.accountable.id or current_user.accountable.cart.id != params[:cart_id].to_i
+      flash[:notice] = "Unauthorized action !"
+      redirect_to root_path
+    else
+      @orderitems= Orderitem.where(order_id: params[:id])
+    end
   end
 
   def new
@@ -17,23 +29,27 @@ class OrderController < ApplicationController
 
   def create
     price = 0
-    @cartitems = Cartitem.where(cart_id: current_user.accountable.cart.id)      #params[:cart_id])
-    @cartitems.each do |cartitem|
-      price += cartitem.price
-    end
-
-    @order = Order.new(total_price: price, payment_status: 'false', order_date: Time.now.strftime("%d/%m/%Y"), customer_id: params[:customer_id])
-
-    if @order.save
+    @cartitems = Cartitem.where(cart_id: current_user.accountable.cart.id)  # params[:cart_id])
+    if @cartitems.empty?
+      flash[:notice] = "No products in cart !"
+      redirect_to product_index_path
+    else
       @cartitems.each do |cartitem|
-        orderitem = Orderitem.new(price: cartitem.price, quantity: cartitem.quantity ,product_id: cartitem.product.id,order_id: @order.id)
-        orderitem.save
+        price += cartitem.price
       end
 
-      # @cartitems.destroy_all
-      redirect_to cart_order_index_path(id: @order.id)
-    else
-      redirect_to new_product_order_path
+      @order = Order.new(total_price: price, payment_status: 'false', order_date: Time.now.strftime("%d/%m/%Y"), customer_id: current_user.accountable.id)
+      if @order.save
+        @cartitems.each do |cartitem|
+          orderitem = Orderitem.new(price: cartitem.price, quantity: cartitem.quantity ,product_id: cartitem.product.id,order_id: @order.id)
+          orderitem.save
+        end
+        # @cartitems.destroy_all
+        redirect_to cart_order_index_path(id: @order.id)
+      else
+        flash[:notice] = "An error occurred while placing order !"
+        render :new
+      end
     end
   end
 

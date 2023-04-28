@@ -1,0 +1,14 @@
+<div class="wrapper" style="margin-top: 200px; height: 300px ; width: 500px; box-shadow: 10px 5px 20px rgba(59, 57, 58, 0.96)">
+  <div style="margin-top: 30px">
+
+    <p style="font-size: 1.8em">Are you sure ?<br> Do you want to logout !</p>
+
+    <br>
+    <div>
+      <%=link_to 'Cancel',product_index_path  , class:"huge ui grey button" , style:"margin-right: 40px"%>
+
+      <%=link_to 'Log out',destroy_user_session_path , data:{turbo_method: :delete}, class:"huge ui red button" %>
+    </div>
+
+  </div>
+</div>

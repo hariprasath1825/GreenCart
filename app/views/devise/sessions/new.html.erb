@@ -1,31 +1,31 @@
-<h2>Log in</h2>
+
+<br><br><br><br>
+<div class="wrapper" style="box-shadow: 10px 5px 20px rgba(59, 57, 58, 0.96)">
+
+<h1>Log in</h1>
 <br>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-<%#= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
 
-  <div class="field form-group">
-      <strong><%= f.label :email %><br /></strong>
-    <%= f.email_field :email, class:"form-control" ,autofocus: true, autocomplete: "email", placeholder:"Eg : abc@gmail.com" %>
+<div class="container-fluid">
+  <div class="field">
+<!--      <strong><%#= f.label :email %><br /></strong>-->
+    <%= f.email_field :email ,autofocus: true, autocomplete: "email", placeholder:"Eg : abc@gmail.com" %>
   </div>
 <br>
 
-  <div class="field form-group">
-    <strong><%= f.label :password %><br /></strong>
-    <%= f.password_field :password,  class:"form-control" ,autocomplete: "current-password" , placeholder:"Enter your password" %>
+  <div class="field ">
+<!--    <strong><%#= f.label :password %><br /></strong>-->
+    <%= f.password_field :password ,autocomplete: "current-password" , placeholder:"Enter your password" %>
   </div>
 <br>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field form-group">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
+
 <br>
-  <div class="actions">
-    <%= f.submit "Log in" , class:"btn btn-secondary"%>
-  </div>
+<!--  <div class="actions">-->
+    <%= f.submit "Log in" , class:"large ui blue button", style:"width: 200px " %>
+<!--  </div>-->
 
 
 <!--  <div class="form-floating mb-2">-->
@@ -36,4 +36,14 @@
 
 <% end %>
 <br>
-<%= render "devise/shared/links" %>
+
+  <div class="member center" >
+
+    New user ?! &nbsp <p> </p> <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;"> <%=link_to "Sign up here" , new_user_registration_path %> <i class="sign in icon" style="visibility: visible;"></i></a>
+
+  </div>
+
+<%#= render "devise/shared/links" %>
+</div>
+
+</div>

@@ -4,9 +4,10 @@ RSpec.describe OrderController , type: :controller do
 
   let(:admin) {create(:admin_user)}
   let(:customer_user) {create(:user ,  :for_customer , role: "customer")}
-  let(:cart) {create(:cart, customer: customer_user.accountable)}
+  let(:cart) {create(:cart, customer_id: customer_user.accountable.id)}
   let(:seller_user) {create(:user ,  :for_seller )}
   let(:product) {create(:product , seller: seller_user.accountable)}
+  let(:cartitem) {create(:cartitem , cart_id: cart.id, product_id: product.id)}
   let(:order) {create(:order , customer_id: customer_user.accountable.id)}
   let(:orderitem) {create(:orderitem , order_id: order.id, product_id: product.id)}
 
@@ -82,10 +83,10 @@ RSpec.describe OrderController , type: :controller do
       end
 
       context "when signed_in as customer" do
-        it "redirects_to login page" do
+        it "redirects_to product index page" do
           sign_in customer_user
           post :create , params:{cart_id: cart.id}
-          expect(response).to redirect_to(cart_order_index_path)
+          expect(response).to redirect_to(product_index_path)
         end
       end
     end

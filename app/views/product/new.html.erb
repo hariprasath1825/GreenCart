@@ -1,6 +1,9 @@
 
 
+
+  <div class="wrapper">
   <h1> Add product</h1>
+<br>
 <%= form_for  @product ,url:{action: :create} do |f|%>
 
 <% if @product.errors.any? %>
@@ -9,41 +12,32 @@
 
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name , placeholder: "Name" %>
   </div>
   <br>
 
   <div class="field">
-    <%= f.label :price %>
-    <%= f.text_field :price %>
+    <%= f.text_field :price , placeholder: "Price" %>
   </div>
   <br>
 
   <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.text_field :description , placeholder: "Description" %>
   </div>
   <br>
 
-<!--  <div class="field">-->
-    <%#= f.text_field :seller_id  ,type: :hidden %>
-<!--  </div>-->
 
   <div class="field">
-    <%= f.label :available_quantity %>
-    <%= f.text_field :available_quantity %>
+    <%= f.text_field :available_quantity , placeholder: "Available Quantity"%>
   </div>
   <br>
 
   <div class="field">
-    <%= f.label :category %>
-    <%= f.text_field :category %>
+    <%= f.text_field :category , placeholder: "Category"%>
   </div>
   <br>
 
     <div class="field">
-    <%= f.label :image %>
     <%= f.file_field :image %>
   </div>
   <br>
@@ -56,4 +50,5 @@
 
 <% end  %>
 
+  </div>
 <%= link_to 'Back', product_index_path ,class:"btn btn-secondary" %>

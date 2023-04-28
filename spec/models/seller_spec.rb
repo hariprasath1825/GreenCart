@@ -134,11 +134,31 @@ RSpec.describe Seller, type: :model do
     end
 
     context "has_one" do
-        it "User" do
-          association = Seller.reflect_on_association(:user).macro
-          expect(association).to be(:has_one)
-        end
+      it "User" do
+        association = Seller.reflect_on_association(:user).macro
+        expect(association).to be(:has_one)
       end
+    end
+  end
 
+  describe "destroy dependency" do
+    context "when seller is deleted" do
+      before(:each) do
+        seller.delete
+      end
+      let(:seller) {create(:seller)}
+      let(:product) {create(:product , seller_id: seller.id)}
+      it "product is also deleted" do
+        expect(Product.find_by(seller_id: seller.id)).to be_nil
+      end
+    end
+
+    context "when seller id deleted" do
+      let(:seller) {create(:seller)}
+      let(:address) {create(:address , seller: seller)}
+      it "address is also deleted" do
+        expect(Address.find_by(addressable_id: seller.id)).to be_nil
+      end
+    end
   end
 end

@@ -81,8 +81,8 @@ RSpec.describe Customer, type: :model do
     end
     context "when value is present" do
       let(:customer) {build(:customer , age: 30)}
-      it "doesnt throw" do
-        expect(customer.errors).to_not include(:age)
+      it "it doesn't throw any error" do
+        expect(customer.save).to be_truthy
       end
     end
 
@@ -141,6 +141,35 @@ RSpec.describe Customer, type: :model do
         end
       end
     end
+  end
 
+  describe "destroy dependency" do
+    before(:each) do
+      customer.delete
+    end
+    context "when customer is deleted" do
+      let(:customer) {create(:customer)}
+      let(:cart) {create(:cart , customer: customer)}
+      it "cart is also deleted" do
+        expect(Cart.find_by(customer_id: customer.id)).to be_nil
+      end
+    end
+
+    context "when customer is deleted" do
+      let(:customer) {create(:customer)}
+      let(:order) {create(:order , customer: customer)}
+      it "orders are also deleted" do
+        expect(Order.find_by(customer_id: customer.id)).to be_nil
+      end
+    end
+
+    context "when customer is deleted" do
+      let(:customer) {create(:customer)}
+      let(:product) {create(:product)}
+      let(:review) { create(:review, customer: customer, product: product) }
+      it "review is also deleted" do
+        expect(Review.find_by(customer_id: customer.id)).to be_nil
+      end
+    end
   end
 end

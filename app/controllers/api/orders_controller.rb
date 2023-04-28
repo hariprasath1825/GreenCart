@@ -1,15 +1,34 @@
 class Api::OrdersController < Api::ApiController
 
-  before_action :check_user
+  before_action :check_customer_user
 
-  # def  index
-  #   @orderitems= Orderitem.where(order_id: params[:id])
-  #   render json: @orderitems , status: 200
-  # end
+  def  index
+    if current_user.accountable.cart.id == params[:cart_id].to_i
+      @orderitems= Orderitem.where(order_id: params[:id])
+      if @orderitems.empty?
+        render json: {error: "No such order exists !"} , status: 422
+      else
+        render json: @orderitems , status: 200
+      end
+    else
+      render json: "Unauthorized action !" , status: 401
+    end
+  end
 
+  def show
+    if current_user.accountable.cart.id == params[:cart_id].to_i
+      @orderitems= Orderitem.where(order_id: params[:id])
+      if @orderitems.empty?
+        render json: "No such order exists !" , status: 404
+      else
+        render json: @orderitems , status: 200
+      end
+    else
+      render json: "Unauthorized action !" , status: 401
+    end
+  end
 
   def create
-    # byebug
     if current_user.accountable.cart.id == params[:cart_id].to_i
       price = 0
       @cartitems = current_user.accountable.cart.cartitems
@@ -26,10 +45,10 @@ class Api::OrdersController < Api::ApiController
             orderitem = Orderitem.new(price: cartitem.price, quantity: cartitem.quantity ,product_id: cartitem.product.id,order_id: @order.id)
             orderitem.save
           end
-          @cartitems.delete
+          @cartitems.delete_all
           render json: @order, status:200
         else
-          render json:@order.errors
+          render json:@order.errors , status: 422
         end
       end
     else
@@ -38,18 +57,6 @@ class Api::OrdersController < Api::ApiController
   end
 
 
-  def show
-    if current_user.accountable.cart.id == params[:cart_id].to_i
-      @orderitems= Orderitem.where(order_id: params[:id])
-      if @orderitems.nil?
-        render json: "No such Order id exists !" , status: 404
-      else
-        render json: @orderitems , status: 200
-      end
-    else
-      render json: "Unauthorized action !" , status: 401
-    end
-  end
 
 
   # custom action
@@ -67,7 +74,7 @@ class Api::OrdersController < Api::ApiController
     params.require(:order).permit(:price)
   end
 
-  def check_user
+  def check_customer_user
     unless current_user.customer?
       render json: "Unauthorized action !" , status: 401
     end

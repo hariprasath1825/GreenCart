@@ -1,5 +1,7 @@
 class Review < ApplicationRecord
 
+  paginates_per 2
+
   belongs_to :customer
   belongs_to :product
 

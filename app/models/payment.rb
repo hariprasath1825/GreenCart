@@ -1,13 +1,13 @@
 class Payment < ApplicationRecord
-    belongs_to :order
+  belongs_to :order
 
-    validates :order_id , presence: true
-    validates :paid_amount , presence: true , numericality: true
+  validates :order_id , presence: true
+  validates :paid_amount , presence: true , numericality: true
 
-    #callbacks
-    after_create :change_payment_status
-    after_save :update_available_quantity
-    after_save :delete_cart
+  #callbacks
+  after_create :change_payment_status
+  after_save :update_available_quantity
+  after_save :delete_cart
 
 
   private
