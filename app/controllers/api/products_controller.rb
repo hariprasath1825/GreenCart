@@ -1,6 +1,6 @@
 class Api::ProductsController < Api::ApiController
 
-  before_action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize! , except: %i[all_products]
   before_action :check_seller_user ,only: %i[create update destroy]
 
 

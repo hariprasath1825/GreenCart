@@ -7,7 +7,9 @@ class ProductController < ApplicationController
     if current_user.role=="seller"
       @products=Product.where(seller_id: current_user.accountable.id).order(:id)
     else
-      @products=Product.all.order(:id)
+      @q = Product.ransack(params[:q])
+      @products=@q.result(distinct: true)
+      # @products=Product.all.order(:id)
     end
   end
 

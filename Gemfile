@@ -100,3 +100,4 @@ gem 'byebug', '~> 11.1', '>= 11.1.3'
 
 gem 'kaminari'
 
+gem 'ransack'
